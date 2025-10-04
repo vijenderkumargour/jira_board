@@ -14,9 +14,7 @@ describe("Home Component", () => {
   it("renders getting started instructions", () => {
     render(<Home />);
     expect(screen.getByText(/Get started by editing/i)).toBeInTheDocument();
-    expect(
-      screen.getByText(/Save and see your changes instantly test/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Vijender jira board./i)).toBeInTheDocument();
   });
 
   it("renders Deploy now link with Vercel logo", () => {
