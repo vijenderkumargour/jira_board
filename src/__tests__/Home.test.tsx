@@ -15,7 +15,7 @@ describe("Home Component", () => {
     render(<Home />);
     expect(screen.getByText(/Get started by editing/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/Save and see your changes instantly/i)
+      screen.getByText(/Save and see your changes instantly test/i)
     ).toBeInTheDocument();
   });
 
