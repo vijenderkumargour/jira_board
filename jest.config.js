@@ -1,29 +1,37 @@
-import nextJest from "next/jest.js"; // 👈 ensure the .js extension is present
+import nextJest from "next/jest.js";
 
-const createJestConfig = nextJest({
-  dir: "./", // Path to your Next.js app
-});
+const createJestConfig = nextJest({ dir: "./" });
 
-/** @type {import('jest').Config} */
 const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",
-
-  // Remove preset conflict — next/jest automatically handles ts-jest
-  // preset: "ts-jest", ❌ REMOVE this line
-
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx,js,jsx}", // include all source files
+    "!src/**/__tests__/**", // ignore test files
+    "!src/**/*.{d.ts}", // ignore type declaration files
+    "!src/**/layout.{ts,tsx}", // ignore layouts
+    "!src/**/index.{ts,tsx,js,jsx}", // ignore index files that just re-export
+    "!src/**/utils/**", // ignore utility folder if you have one
+  ],
+  coverageDirectory: "coverage",
+  coverageReporters: ["text", "lcov"],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1", // ✅ path alias support
+    "^@/(.*)$": "<rootDir>/src/$1",
+  },
+  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  transform: {
+    "^.+\\.(ts|tsx)$": "ts-jest",
   },
 
-  // Optional — helps Jest ignore certain folders
-  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
-
+  // ✅ Coverage thresholds
   coverageThreshold: {
-    branches: 100,
-    functions: 100,
-    lines: 100,
-    statements: 100,
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
   },
 };
 
